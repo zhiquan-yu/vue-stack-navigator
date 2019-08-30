@@ -10,6 +10,14 @@
   ],
   "author": "zhiquan",
   "license": "MIT",
+  "homepage": "https://github.com/zhiquan-yu/vue-stack-navigator",
+  "bugs": {
+    "url": "https://github.com/zhiquan-yu/vue-stack-navigator/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zhiquan-yu/vue-stack-navigator.git"
+  },
   "main": "dist/vue-stack-navigator.umd.js",
   "module": "dist/vue-stack-navigator.esm.js",
   "unpkg": "dist/vue-stack-navigator.min.js",
