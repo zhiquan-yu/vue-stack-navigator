@@ -10,6 +10,7 @@
 import Vue from 'vue'
 import { createComponent, ref, watch, SetupContext } from "@vue/composition-api";
 import { Route } from "vue-router";
+import StackKeepAlive from './components/StackKeepAlive'
 
 export interface VueWithAfterEnterHook extends Vue {
   afterEnter: () => void
@@ -72,6 +73,10 @@ export default createComponent({
         }
       },
     }
+  },
+
+  components: {
+    StackKeepAlive,
   },
 })
 </script>

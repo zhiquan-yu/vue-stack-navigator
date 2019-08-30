@@ -17,7 +17,7 @@
     "importHelpers": true,
     "stripInternal": true,
     "downlevelIteration": true,
-    "noUnusedLocals": true
+    "noUnusedLocals": true,
   },
   "include": ["src", "types"]
 }

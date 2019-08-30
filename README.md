@@ -2,10 +2,18 @@
 
 `vue-stack-navigaotr` is a stack navigator for Vue apps
 
+![Demo for vue-stack-navigator](./demo.gif)
+
 ## Navigation
 
+- [Concept](#Concept)
 - [Installation](#Installation)
 - [Usage](#Usage)
+- [Example](#Example)
+
+## Concept
+
+In the browser navigator model, when navigate from FooScreen to BarScreen，BarScreen created, FooScreen destroyed, when back to FooScreen, FooScreen created again, BarScreen destroyed, but in the App navigator model, FooScreen keep alived. VueStackNavigator bring this ability to you.
 
 ## Installation
 
@@ -43,3 +51,7 @@ const app = new Vue({
   router
 }).$mount('#app')
 ```
+
+## Example
+
+Clone this repo, and open ./example/index.html in your browser
