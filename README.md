@@ -54,4 +54,6 @@ const app = new Vue({
 
 ## Example
 
-Clone this repo, and open ./example/index.html in your browser
+1. Clone this repo
+2. Run `npm run build`
+3. Open `./example/index.html` in your browser
