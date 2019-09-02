@@ -13,7 +13,7 @@
 
 ## Concept
 
-In the browser navigator model, when navigate from FooScreen to BarScreen，BarScreen created, FooScreen destroyed, when back to FooScreen, FooScreen created again, BarScreen destroyed, but in the App navigator model, FooScreen keep alived. VueStackNavigator bring this ability to you.
+In the browser navigator model, when navigate from FooScreen to BarScreen, BarScreen created, FooScreen destroyed, when back to FooScreen, FooScreen created again, BarScreen destroyed, but in the App navigator model, FooScreen keep alived. VueStackNavigator bring this ability to you.
 
 ## Installation
 

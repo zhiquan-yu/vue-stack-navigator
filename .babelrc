@@ -1,0 +1,15 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": [
+          "last 2 android version",
+          "last 2 ios_saf version",
+          "last 2 and_qq version",
+          "last 2 and_chr version"
+        ]
+      }
+    ]
+  ]
+}

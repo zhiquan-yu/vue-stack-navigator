@@ -69,6 +69,7 @@ export default createComponent({
       handleAfterEnter() {
         if (screen.value && screen.value.afterEnter) {
           // TODO: why setTimeout
+          // FIXME: setTimeout 可以解决大多数最后一帧卡顿问题，但是仍会有发生的情况
           setTimeout(screen.value.afterEnter)
         }
       },
