@@ -43,6 +43,7 @@
     const Bar = { name: 'BarScreen', template: '<div class="screen bar"><router-link to="foo">bar</router-link></div>' }
 
     const routes = [
+      { path: '/', redirect: '/foo' },
       { path: '/foo', component: Foo },
       { path: '/bar', component: Bar }
     ]
