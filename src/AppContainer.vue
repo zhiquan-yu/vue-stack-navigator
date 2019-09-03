@@ -12,8 +12,8 @@ import { createComponent, ref, watch, SetupContext } from "@vue/composition-api"
 import { Route } from "vue-router";
 import StackKeepAlive from './components/StackKeepAlive'
 
-export interface VueWithAfterEnterHook extends Vue {
-  afterEnter: () => void
+enum NavigationLifecycle {
+  AfterEnter = 'afterEnter',
 }
 
 export default createComponent({
@@ -22,7 +22,7 @@ export default createComponent({
   setup(_: any, context: SetupContext) {
     const { root } = context
 
-    const screen = ref<VueWithAfterEnterHook>(null)
+    const screen = ref<Vue>(null)
     const transitionName = ref('')
     
     let touchstart: TouchEvent | null = null
@@ -62,16 +62,25 @@ export default createComponent({
       }
     })
 
+    function callHook(component: Vue, hookName: NavigationLifecycle) {
+      const hook = component.$options[hookName]
+
+      if (hook) {
+        hook.call(component)
+      }
+
+      component.$children.forEach(child => callHook(child, hookName))
+    }
+
     return {
       screen,
       transitionName,
 
       handleAfterEnter() {
-        if (screen.value && screen.value.afterEnter) {
-          // TODO: why setTimeout
-          // FIXME: setTimeout 可以解决大多数最后一帧卡顿问题，但是仍会有发生的情况
-          setTimeout(screen.value.afterEnter)
-        }
+        // FIXME: setTimeout can solve most last frame jams, but there will still be cases
+        setTimeout(() => {
+          callHook(screen.value, NavigationLifecycle.AfterEnter)
+        })
       },
     }
   },

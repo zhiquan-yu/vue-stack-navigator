@@ -39,13 +39,26 @@
     Vue.use(vueCompositionApi.default)
     Vue.use(VueStackNavigator.default)
 
-    const Foo = { name: 'FooScreen', template: '<div class="screen foo"><router-link to="bar">foo</router-link></div>' }
-    const Bar = { name: 'BarScreen', template: '<div class="screen bar"><router-link to="foo">bar</router-link></div>' }
+    const FooScreen = { 
+      name: 'FooScreen',
+      template: '<div class="screen foo"><router-link to="bar">foo</router-link></div>',
+      afterEnter() {
+        console.log('FooScreen afterEnter')
+      },
+    }
+    
+    const BarScreen = {
+      name: 'BarScreen',
+      template: '<div class="screen bar"><router-link to="foo">bar</router-link></div>',
+      afterEnter() {
+        console.log('BarScreen afterEnter')
+      },
+    }
 
     const routes = [
       { path: '/', redirect: '/foo' },
-      { path: '/foo', component: Foo },
-      { path: '/bar', component: Bar }
+      { path: '/foo', component: FooScreen },
+      { path: '/bar', component: BarScreen }
     ]
 
     const router = new VueRouter({
