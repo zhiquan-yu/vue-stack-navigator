@@ -39,25 +39,23 @@ function pruneCacheEntry(cache: VNodeCache, key: string) {
   cache[key] = null;
 }
 
+// @ts-ignore
 export default createComponent({
   name: 'stack-keep-alive',
 
-  // @ts-ignore
   abstract: true,
 
-  setup(_: any, ctx: SetupContext) {
+  setup(_, ctx) {
     const { slots, root } = ctx;
-    const { $route } = root;
 
     const cache: VNodeCache = Object.create(null);
 
     return () => {
-      // @ts-ignore
-      const slot = slots.default && slots.default();
+      const slot = slots.default();
       const vnode = getFirstComponentChild(slot);
 
       if (vnode && vnode.componentOptions) {
-        const key: string = window.history.state ? window.history.state.key : '00000.000';
+        const key: string = window.history.state ? window.history.state.key : '000.000';
         const cached = cache[key];
 
         if (cached) {
@@ -75,7 +73,7 @@ export default createComponent({
           cache[key] = vnode;
           stack.push({
             key,
-            route: $route,
+            route: root.$route,
           });
         }
 
