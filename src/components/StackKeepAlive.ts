@@ -51,7 +51,7 @@ export default createComponent({
     const cache: VNodeCache = Object.create(null);
 
     return () => {
-      const slot = slots.default();
+      const slot = slots.default && slots.default();
       const vnode = getFirstComponentChild(slot);
 
       if (vnode && vnode.componentOptions) {
