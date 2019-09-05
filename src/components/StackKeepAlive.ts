@@ -49,6 +49,7 @@ export default createComponent({
     const { slots, root } = ctx;
 
     const cache: VNodeCache = Object.create(null);
+    let lastKey = '';
 
     return () => {
       const slot = slots.default && slots.default();
@@ -56,25 +57,34 @@ export default createComponent({
 
       if (vnode && vnode.componentOptions) {
         const key: string = window.history.state ? window.history.state.key : '000.000';
-        const cached = cache[key];
+        const isReplace = key === lastKey;
+        lastKey = key;
 
-        if (cached) {
-          vnode.componentInstance = cached.componentInstance;
-
-          const index = stack.findIndex(item => item.key === key);
-          if (index >= 0) {
-            for (let i = index + 1; i < stack.length; i++) {
-              pruneCacheEntry(cache, stack[i].key);
-            }
-
-            stack.splice(index + 1);
-          }
-        } else {
+        if (isReplace) {
+          pruneCacheEntry(cache, key);
           cache[key] = vnode;
-          stack.push({
-            key,
-            route: root.$route,
-          });
+          stack.splice(-1, 1, { key, route: root.$route });
+        } else {
+          const cached = cache[key];
+
+          if (cached) {
+            vnode.componentInstance = cached.componentInstance;
+
+            const index = stack.findIndex(item => item.key === key);
+            if (index >= 0) {
+              for (let i = index + 1; i < stack.length; i++) {
+                pruneCacheEntry(cache, stack[i].key);
+              }
+
+              stack.splice(index + 1);
+            }
+          } else {
+            cache[key] = vnode;
+            stack.push({
+              key,
+              route: root.$route,
+            });
+          }
         }
 
         if (vnode.data) {
