@@ -77,10 +77,10 @@ export default createComponent({
       transitionName,
 
       handleAfterEnter() {
-        // FIXME: setTimeout can solve most last frame jams, but there will still be cases
+        // FIXME: afterEnter called before to screen entered
         setTimeout(() => {
           callHook(screen.value, NavigationLifecycle.AfterEnter)
-        })
+        }, 100)
       },
     }
   },
@@ -100,49 +100,42 @@ export default createComponent({
   backface-visibility: hidden;
 }
 
-.slide-left-leave,
-.slide-left-leave-active {
+.slide-left-leave-active,
+.slide-left-enter-active,
+.slide-right-enter-active,
+.slide-right-leave-active {
   position: fixed;
   top: 0;
-  transform: translateX(-50%);
-  transition: transform var(--duration) ease-out .1s;
 }
 
-.slide-left-enter {
-  position: fixed;
-  top: 0;
-  transform: translateX(100%);
+.slide-left-leave-active {
+  transform: translateX(-50%);
+  transition: transform var(--duration) ease-out .1s;
 }
 
 .slide-left-enter-active {
   transition: transform var(--duration) ease-out;
 }
 
-.slide-left-gesture-leave,
-.slide-left-gesture-leave-active {
-  display: none;
-}
-
-.slide-right-enter {
-  position: fixed;
-  top: 0;
-  transform: translateX(-50%);
+.slide-left-enter {
+  transform: translateX(100%);
 }
 
 .slide-right-enter-active {
   transition: transform var(--duration) ease-out;
 }
 
-.slide-right-leave,
+.slide-right-enter {
+  transform: translateX(-50%);
+}
+
 .slide-right-leave-active {
-  position: fixed;
-  top: 0;
   z-index: 1;
   transform: translateX(100%);
   transition: transform var(--duration) ease-out .1s;
 }
 
-.slide-right-gesture-leave,
+.slide-left-gesture-leave-active,
 .slice-right-gesture-leave-active {
   display: none;
 }

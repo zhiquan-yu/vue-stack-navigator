@@ -42,6 +42,9 @@
     const FooScreen = { 
       name: 'FooScreen',
       template: '<div class="screen foo"><router-link to="bar">foo</router-link></div>',
+      created() {
+        console.log('FooScreen created')
+      },
       afterEnter() {
         console.log('FooScreen afterEnter')
       },
@@ -50,6 +53,9 @@
     const BarScreen = {
       name: 'BarScreen',
       template: '<div class="screen bar"><router-link to="foo">bar</router-link></div>',
+      created() {
+        console.log('BarScreen created')
+      },
       afterEnter() {
         console.log('BarScreen afterEnter')
       },
