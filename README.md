@@ -1,6 +1,6 @@
 # Vue Stack Navigator
 
-`vue-stack-navigaotr` is a stack navigator for Vue apps
+`vue-stack-navigator` is a stack navigator for Vue apps
 
 ![Demo for vue-stack-navigator](./demo.gif)
 
