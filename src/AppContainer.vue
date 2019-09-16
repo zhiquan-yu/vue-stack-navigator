@@ -95,22 +95,17 @@ export default createComponent({
 <style scoped>
 .router-view {
   --duration: .3s;
+  
+  position: absolute;
+  top: 0;
 
   will-change: transform;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
 
-.slide-left-leave-active,
-.slide-left-enter-active,
-.slide-right-enter-active,
-.slide-right-leave-active {
-  position: fixed;
-  top: 0;
-}
-
 .slide-left-leave-active {
-  transform: translateX(-50%);
+  transform: translateX(-25%);
   transition: transform var(--duration) ease-out .1s;
 }
 
@@ -127,7 +122,7 @@ export default createComponent({
 }
 
 .slide-right-enter {
-  transform: translateX(-50%);
+  transform: translateX(-25%);
 }
 
 .slide-right-leave-active {
