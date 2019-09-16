@@ -1,7 +1,7 @@
 <template>
   <transition :name="transitionName" @afterEnter="handleAfterEnter">
     <StackKeepAlive>
-      <RouterView ref="screen" class="router-view" />
+      <RouterView ref="screen" :key="$route.path" class="router-view" />
     </StackKeepAlive>
   </transition>
 </template>
