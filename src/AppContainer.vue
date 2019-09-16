@@ -1,7 +1,7 @@
 <template>
   <transition :name="transitionName" @afterEnter="handleAfterEnter">
     <StackKeepAlive>
-      <RouterView :key="$route.path" ref="screen" class="router-view" />
+      <RouterView ref="screen" class="router-view" />
     </StackKeepAlive>
   </transition>
 </template>
@@ -9,7 +9,6 @@
 <script lang="ts">
 import Vue from 'vue'
 import { createComponent, ref, watch, SetupContext } from "@vue/composition-api";
-import { Route } from "vue-router";
 import StackKeepAlive from './components/StackKeepAlive'
 
 enum NavigationLifecycle {
@@ -39,7 +38,7 @@ export default createComponent({
       touchmove = e
     })
 
-    watch(() => root.$route, (to: Route, from: Route) => {
+    watch(() => root.$route, () => {
       fromTime = toTime
       toTime = window.history.state ? (Number.parseInt(window.history.state.key, 0) || 0) : 0
 
@@ -60,6 +59,8 @@ export default createComponent({
           transitionName.value = 'slide-left'
         }
       }
+    }, {
+      flush: 'pre',
     })
 
     function callHook(component: Vue, hookName: NavigationLifecycle) {
