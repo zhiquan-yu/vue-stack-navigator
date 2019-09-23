@@ -10,13 +10,14 @@
       margin: 0;
     }
 
-    .screen {
-      width: 100vw;
-      height: 100vh;
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding-left: 0;
+    }
 
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    li {
+      height: 200px;
     }
 
     .foo {
@@ -31,6 +32,26 @@
 <body>
   <div id="app"></div>
 
+  <template id="foo">
+    <div class="foo">
+      <button @click="handleBack">Back</button>
+      <router-link to="bar">to bar</router-link>
+
+      <ul>
+        <li v-for="(_, i) in list" :key="i">{{i}}</li>
+      </ul>
+
+      <router-link to="bar">to bar</router-link>
+    </div>
+  </template>
+
+  <template id="bar">
+    <div class="bar">
+      <button @click="handleBack">Back</button>
+      <router-link to="foo">to foo</router-link>
+    </div>
+  </template>
+
   <script src="../node_modules/vue/dist/vue.js"></script>
   <script src="../node_modules/vue-router/dist/vue-router.js"></script>
   <script src="../node_modules/@vue/composition-api/dist/vue-composition-api.umd.js"></script>
@@ -39,12 +60,24 @@
     Vue.use(vueCompositionApi.default)
     Vue.use(VueStackNavigator.default)
 
-    const FooScreen = { 
+    const FooScreen = {
       name: 'FooScreen',
-      template: '<div class="screen foo"><router-link to="bar">foo</router-link></div>',
-      created() {
-        console.log('FooScreen created')
+
+      template: document.getElementById('foo').innerHTML,
+
+      setup(_, context) {
+        const { root } = context
+        const { $router } = root
+
+        return {
+          list: Array(10).fill(0),
+
+          handleBack() {
+            $router.back()
+          },
+        }
       },
+
       afterEnter() {
         console.log('FooScreen afterEnter')
       },
@@ -52,10 +85,20 @@
     
     const BarScreen = {
       name: 'BarScreen',
-      template: '<div class="screen bar"><router-link to="foo">bar</router-link></div>',
-      created() {
-        console.log('BarScreen created')
+
+      template: document.getElementById('bar').innerHTML,
+
+      setup(_, context) {
+        const { root } = context
+        const { $router } = root
+
+        return {
+          handleBack() {
+            $router.back()
+          },
+        }
       },
+
       afterEnter() {
         console.log('BarScreen afterEnter')
       },
