@@ -47,7 +47,7 @@ function useTransition(route: Ref<Route>) {
     fromTime = toTime
     toTime = window.history.state ? (Number.parseInt(window.history.state.key, 0) || 0) : 0
 
-    if (!toTime && !fromTime) {
+    if (!toTime || !fromTime) {
       return
     }
 
@@ -57,7 +57,9 @@ function useTransition(route: Ref<Route>) {
       } else {
         transitionName.value = 'slide-right'
       }
-    } else {
+    }
+    
+    if (toTime > fromTime) {
       if (touchstart && touchmove && document.body.clientWidth - touchstart.touches[0].clientX < 50 && touchmove.touches[0].clientX - touchstart.touches[0].clientX < -10) {
         transitionName.value = 'slide-left-gesture'
       } else {
