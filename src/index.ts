@@ -1,8 +1,9 @@
-import { VueConstructor } from 'vue'
+import { VueConstructor } from 'vue';
 
-export { default as AppContainer } from './AppContainer.vue'
-import stack from './stack'
+export { default as AppContainer } from './AppContainer.vue';
+export * from './LifeCycles';
+import stack from './stack';
 
 export default function install(Vue: VueConstructor) {
-  Vue.prototype.$stack = stack
+  Vue.prototype.$stack = stack;
 }

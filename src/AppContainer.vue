@@ -8,23 +8,11 @@
 
 <script lang="ts">
 import Vue from 'vue'
-import { createComponent, ref, watch, SetupContext, Ref, computed } from "@vue/composition-api"
-import StackKeepAlive from './components/StackKeepAlive'
+import { createComponent, ref, watch, SetupContext, Ref, computed, provide } from "@vue/composition-api"
 import { Route } from 'vue-router'
 
-enum NavigationLifecycle {
-  AfterEnter = 'afterEnter',
-}
-
-function callHook(component: Vue, hookName: NavigationLifecycle) {
-  const hook = component.$options[hookName]
-
-  if (hook) {
-    hook.call(component)
-  }
-
-  component.$children.forEach(child => callHook(child, hookName))
-}
+import StackKeepAlive from './components/StackKeepAlive'
+import { OnAfterEnter } from './LifeCycles'
 
 function useTransition(route: Ref<Route>) {
   const transitionName = ref('')
@@ -75,14 +63,26 @@ function useTransition(route: Ref<Route>) {
   }
 }
 
-function useLifecycles(screen: Ref<Vue>) {
+function useLifecycles() {
+  const callbacks = []
+
+  function onAfterEnter(callback: Function) {
+    callbacks.push(callback)
+  }
+
+  function afterEnter() {
+    // FIXME: afterEnter called before screen entered
+    setTimeout(() => {
+      while (callbacks.length) {
+        callbacks.shift()()
+      }
+    }, 100)
+  }
+
+  provide(OnAfterEnter, onAfterEnter)
+
   return {
-    afterEnter() {
-      // FIXME: afterEnter called before to screen entered
-      setTimeout(() => {
-        callHook(screen.value, NavigationLifecycle.AfterEnter)
-      }, 100)
-    },
+    afterEnter,
   }
 }
 
@@ -95,7 +95,7 @@ export default createComponent({
     const route = computed(() => root.$route)
     const screen = ref<Vue>(null)
     const { transitionName } = useTransition(route)
-    const { afterEnter } = useLifecycles(screen)
+    const { afterEnter } = useLifecycles()
 
     return {
       screen,

@@ -68,19 +68,30 @@ const app = new Vue({
 ## Lifecycle
 
 ```js
-const FooScreen = {
-  created() {
-    this.dataPromise = fetch('xxx')
-  },
+import { inject } from '@vue/composition-api'
+import { OnAfterEnter } from 'vue-stack-navigator'
 
-  /**
-   * FooScreen entered
-   * 
-   * If the FooScreen is very large, and you set the `data` before `afterEnter`, the Vue render process will break your transition animation,
-   * so fetch data in `created` and set data in `afterEnter` should be the best practice
-   */
-  async afterEnter() {
-    this.data = await this.dataPromise
+function useData() {
+  const onAfterEnter = inject(OnAfterEnter, () => {})
+
+  const data = ref(null)
+  const dataPromise = fetch('xxx')
+  onAfterEnter(async () => {
+    data.value = await dataPromise
+  })
+
+  return {
+    data,
+  }
+}
+
+const FooScreen = {
+  setup() {
+    const { data } = useData()
+
+    return {
+      data,
+    }
   },
 }
 ```
