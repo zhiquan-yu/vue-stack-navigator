@@ -35,7 +35,7 @@ function useTransition(route: Ref<Route>) {
     fromTime = toTime
     toTime = window.history.state ? (Number.parseInt(window.history.state.key, 0) || 0) : 0
 
-    if (!toTime || !fromTime) {
+    if (!toTime && !fromTime) {
       return
     }
 
