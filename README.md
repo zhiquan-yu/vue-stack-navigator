@@ -69,11 +69,9 @@ const app = new Vue({
 
 ```js
 import { inject } from '@vue/composition-api'
-import { OnAfterEnter } from 'vue-stack-navigator'
+import { onAfterEnter } from 'vue-stack-navigator'
 
 function useData() {
-  const onAfterEnter = inject(OnAfterEnter, () => {})
-
   const data = ref(null)
   const dataPromise = fetch('xxx')
   onAfterEnter(async () => {

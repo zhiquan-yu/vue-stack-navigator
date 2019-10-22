@@ -61,7 +61,7 @@
     Vue.use(VueStackNavigator.default)
     
     const { inject } = vueCompositionApi
-    const { OnAfterEnter } = VueStackNavigator
+    const { onAfterEnter } = VueStackNavigator
 
     const FooScreen = {
       name: 'FooScreen',
@@ -71,8 +71,6 @@
       setup(_, context) {
         const { root } = context
         const { $router } = root
-
-        const onAfterEnter = inject(OnAfterEnter)
 
         onAfterEnter(() => {
           console.log('FooScreen afterEnter')
@@ -96,8 +94,6 @@
       setup(_, context) {
         const { root } = context
         const { $router } = root
-
-        const onAfterEnter = inject(OnAfterEnter)
 
         onAfterEnter(() => {
           console.log('BarScreen afterEnter')
