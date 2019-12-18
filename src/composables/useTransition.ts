@@ -1,6 +1,8 @@
 import { Ref, ref, watch } from '@vue/composition-api';
 import { Route } from 'vue-router';
 
+const START = '/';
+
 export default function useTransition(route: Ref<Route>) {
   const transitionName = ref('');
 
@@ -20,7 +22,15 @@ export default function useTransition(route: Ref<Route>) {
 
   watch(
     route,
-    () => {
+    (_, from: Route) => {
+      // When use lazy loading routes, vue-router triggered 2 watch change,
+      // one is from undefined to '/'
+      // one is from '/' to your path
+      // we should not trigger transition
+      if (from === undefined || from.fullPath === START) {
+        return;
+      }
+
       fromTime = toTime;
       toTime = window.history.state ? Number.parseInt(window.history.state.key, 0) || 0 : 0;
 
